@@ -1,0 +1,8 @@
+*.sh
+*.tar
+*.bin
+P15/
+logs/
+colmap_models/
+**/__pycache__/
+sampled_frames/
