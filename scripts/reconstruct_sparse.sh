@@ -3,7 +3,8 @@ start=`date +%s`
 
 VIDEO=$1 #i.e. P02_14
 SPARSE_PATH=$2 # path to save the sparse models
-IMAGES_ROOT=$3 # root of epic kitchens images
+# IMAGES_ROOT=$3 # root of epic kitchens images
+FRAMES_ROOT=$3 # root of the video frames folder
 SAMPLED_IMAGES=$4 # path of the sampeld images to be used for reconstruction
 LOGS=$5 # to save the output logs
 GPU_IDX=$6 # i.e. 0
@@ -20,7 +21,7 @@ colmap feature_extractor    \
     --ImageReader.single_camera 1     \
     --SiftExtraction.use_gpu 1 \
     --SiftExtraction.gpu_index $GPU_IDX \
-    --image_path ${IMAGES_ROOT}/${PRE}/${VIDEO} \
+    --image_path ${FRAMES_ROOT} \
 
 colmap sequential_matcher \
      --database_path ${VIDEO}_database.db \
@@ -31,7 +32,7 @@ colmap sequential_matcher \
 
 colmap mapper     \
     --database_path ${VIDEO}_database.db     \
-    --image_path ${PRE}/${VIDEO}     \
+    --image_path ${FRAMES_ROOT}     \
     --output_path ${SPARSE_PATH}/${VIDEO}/sparse \
     --image_list_path ${SAMPLED_IMAGES}/${VIDEO}_selected_frames.txt \
 
