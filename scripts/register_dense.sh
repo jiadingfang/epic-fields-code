@@ -37,6 +37,10 @@ colmap image_registrator    \
      --input_path ${SPARSE_PATH}/${VIDEO}/sparse/0    \
      --output_path ${DENSE_PATH}/${VIDEO} \
 
+colmap model_converter    \
+     --input_path ${DENSE_PATH}/${VIDEO}    \
+     --output_path ${DENSE_PATH}/${VIDEO}    \
+     --output_type TXT
 
 colmap model_analyzer --path ${DENSE_PATH}/${VIDEO} > "${LOGS}/$VIDEO.out"
 
