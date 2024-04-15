@@ -3,11 +3,12 @@ start=`date +%s`
 VIDEO=$1 #i.e. P02_14
 SPARSE_PATH=$2 # path to save the sparse models
 DENSE_PATH=$3 # path to save the sparse models
-IMAGES_ROOT=$4 # root of epic kitchens images
+# IMAGES_ROOT=$4 # root of epic kitchens images
+FRAMES_ROOT=$4 # root of the video frames folder
 LOGS=$5 # to save the output logs
 GPU_IDX=$6 # i.e. 0
 
-PRE=$(echo "$VIDEO" | cut -d'_' -f1)
+# PRE=$(echo "$VIDEO" | cut -d'_' -f1)
 
 cp ${SPARSE_PATH}/${VIDEO}/database.db ${VIDEO}_database.db #move the database from the sparse model
 mkdir ${DENSE_PATH}/${VIDEO}
@@ -19,7 +20,7 @@ colmap feature_extractor    \
     --ImageReader.existing_camera_id 1 \
     --SiftExtraction.use_gpu 1 \
     --SiftExtraction.gpu_index $GPU_IDX \
-    --image_path ${IMAGES_ROOT}/${PRE}/${VIDEO} \
+    --image_path ${FRAMES_ROOT} \
 
 
 

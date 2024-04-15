@@ -145,61 +145,61 @@ for video_frame_path in input_video_frame_paths:
     i += 1
 
 
-# ########################################################################################
-# # Reconstruct dense frames
-# ########################################################################################
+########################################################################################
+# Reconstruct dense frames
+########################################################################################
 
-# print('Reconstructing dense frames...')
+print('Reconstructing dense frames...')
 
-# i = 0
-# # for video in videos_list:
-# #     pre = video.split('_')[0]
-# for video_frame_path in input_video_frame_paths:
-#     video_name = video_frame_path.replace('/','_')
-#     if (not os.path.exists(os.path.join(args.dense_reconstuctions_root, '%s' % video_name))):
-#         # check the number of images in this video
-#         num_lines = len(glob.glob(os.path.join(video_frame_path,'*.jpg')) + glob.glob(os.path.join(video_frame_path,'*.png')))
+i = 0
+# for video in videos_list:
+#     pre = video.split('_')[0]
+for video_frame_path in input_video_frame_paths:
+    video_name = video_frame_path.replace('/','_')
+    if (not os.path.exists(os.path.join(args.dense_reconstuctions_root, '%s' % video_name))):
+        # check the number of images in this video
+        num_lines = len(glob.glob(os.path.join(video_frame_path,'*.jpg')) + glob.glob(os.path.join(video_frame_path,'*.png')))
 
-#         print('Processing: ', video_name, '(',num_lines, 'images )')
-#         start_time = time.time()
+        print('Processing: ', video_name, '(',num_lines, 'images )')
+        start_time = time.time()
 
-#         # Define the path to the shell script
-#         script_path = 'scripts/register_dense.sh'
+        # Define the path to the shell script
+        script_path = 'scripts/register_dense.sh'
 
-#         # Create a unique copy of the script
-#         script_copy_path = video_name + '_' + str(os.getpid()) + '_' + os.path.basename(script_path)
-#         shutil.copy(script_path, script_copy_path)
+        # Create a unique copy of the script
+        script_copy_path = video_name + '_' + str(os.getpid()) + '_' + os.path.basename(script_path)
+        shutil.copy(script_path, script_copy_path)
 
-#         # Output file
-#         output_file_path = os.path.join(args.logs_path, script_copy_path.replace('.sh', '.out'))
+        # Output file
+        output_file_path = os.path.join(args.logs_path, script_copy_path.replace('.sh', '.out'))
 
 
-#         # Define the command to execute the script
-#         command = ["bash", script_copy_path, video_name, args.sparse_reconstuctions_root, args.dense_reconstuctions_root, video_frame_path, args.summary_path, str(gpu_index)]
-#         print('command:', command)
+        # Define the command to execute the script
+        command = ["bash", script_copy_path, video_name, args.sparse_reconstuctions_root, args.dense_reconstuctions_root, video_frame_path, args.summary_path, str(gpu_index)]
+        print('command:', command)
 
-#         # Open the output file in write mode
-#         with open(output_file_path, 'w') as output_file:
-#             # Run the command and capture its output in real time
-#             process = subprocess.Popen(command, stdout=output_file, stderr=subprocess.PIPE, text=True)
-#             while True:
-#                 output = process.stderr.readline()
-#                 if output == '' and process.poll() is not None:
-#                     break
-#                 if output:
-#                     output_file.write(output)
-#                     output_file.flush()
+        # Open the output file in write mode
+        with open(output_file_path, 'w') as output_file:
+            # Run the command and capture its output in real time
+            process = subprocess.Popen(command, stdout=output_file, stderr=subprocess.PIPE, text=True)
+            while True:
+                output = process.stderr.readline()
+                if output == '' and process.poll() is not None:
+                    break
+                if output:
+                    output_file.write(output)
+                    output_file.flush()
 
-#         # Once the script has finished running, you can delete the copy of the script
-#         os.remove(script_copy_path)
+        # Once the script has finished running, you can delete the copy of the script
+        os.remove(script_copy_path)
 
-#         reg_images = get_num_images(os.path.join(args.dense_reconstuctions_root, video_name))
-#         if reg_images > 0:
-#             print(f"Registered_images/total_images: {reg_images}/{num_lines} = {round(reg_images/num_lines*100)}%")
-#         else:
-#             print('The video reconstruction fails!! no colmap files are found!')
+        reg_images = get_num_images(os.path.join(args.dense_reconstuctions_root, video_name))
+        if reg_images > 0:
+            print(f"Registered_images/total_images: {reg_images}/{num_lines} = {round(reg_images/num_lines*100)}%")
+        else:
+            print('The video reconstruction fails!! no colmap files are found!')
 
-#         print("Execution time:  %s minutes" % round((time.time() - start_time)/60, 2))
-#         print('-----------------------------------------------------------')
+        print("Execution time:  %s minutes" % round((time.time() - start_time)/60, 2))
+        print('-----------------------------------------------------------')
 
-#     i += 1
+    i += 1
