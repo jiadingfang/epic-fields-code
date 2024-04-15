@@ -39,6 +39,7 @@ if __name__ == '__main__':
     graph = calc_graph(homographies, **vars(args))
     fpaths_filtered = graph2fpaths(graph)
     lines = [os.path.basename(v)+'\n' for v in fpaths_filtered]
+    print('Selected %d images.' % len(fpaths_filtered))
     dir_name = os.path.dirname(args.dst_file)
     if not os.path.exists(dir_name):
         os.makedirs(dir_name)
