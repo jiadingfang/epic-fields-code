@@ -151,6 +151,8 @@ for video_frame_path in input_video_frame_paths:
 
 print('Reconstructing dense frames...')
 
+os.makedirs(args.dense_reconstuctions_root, exist_ok=True)
+
 i = 0
 # for video in videos_list:
 #     pre = video.split('_')[0]
